@@ -1,0 +1,148 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  goals         Goal[]
+  habits        Habit[]
+  habitLogs     HabitLog[]
+  dailyPlans    DailyPlan[]
+  journals      Journal[]
+  aiReflections AIReflection[]
+}
+
+model Goal {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+  timeframe   String
+
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Habit {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+
+  type      String
+  intention String @default("OBSERVE")
+
+  linkedHabitId     String?
+  releaseTargetDate DateTime?
+  isArchived        Boolean   @default(false)
+
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  linkedHabit Habit?  @relation("HabitPolarity", fields: [linkedHabitId], references: [id], onDelete: SetNull)
+  linkedBy    Habit[] @relation("HabitPolarity")
+
+  logs HabitLog[]
+
+  shadowReflections AIReflection[] @relation("ShadowHabitReflection")
+  lightReflections  AIReflection[] @relation("LightHabitReflection")
+
+  @@index([userId])
+  @@index([linkedHabitId])
+}
+
+model HabitLog {
+  id        String   @id @default(cuid())
+  habitId   String
+  userId    String
+  date      DateTime @default(now())
+  completed Boolean  @default(false)
+
+  notes   String?
+  trigger String?
+  mood    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([habitId])
+  @@index([userId])
+  @@index([date])
+}
+
+model DailyPlan {
+  id         String   @id @default(cuid())
+  date       DateTime
+  target     String
+  milestones String?
+  notes      String?
+  userId     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([date])
+}
+
+model Journal {
+  id         String  @id @default(cuid())
+  content    String
+  aiAnalysis String?
+  mood       String?
+  userId     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  aiReflections AIReflection[]
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model AIReflection {
+  id            String   @id @default(cuid())
+  journalId     String?
+  userId        String
+  shadowHabitId String?
+  lightHabitId  String?
+  response      String
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  journal Journal? @relation(fields: [journalId], references: [id], onDelete: SetNull)
+
+  shadowHabit Habit? @relation("ShadowHabitReflection", fields: [shadowHabitId], references: [id], onDelete: SetNull)
+  lightHabit  Habit? @relation("LightHabitReflection", fields: [lightHabitId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([journalId])
+  @@index([shadowHabitId])
+  @@index([lightHabitId])
+}

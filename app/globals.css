@@ -1,26 +1,232 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-surface: hsl(var(--surface));
+  --color-surface-elevated: hsl(var(--surface-elevated));
+  --color-border-soft: hsl(var(--border-soft));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-shadow: hsl(var(--shadow));
+  --color-light: hsl(var(--light));
+  --color-muted-text: hsl(var(--muted-text));
+
+  --shadow-hermetic: 0 24px 80px rgba(0, 0, 0, 0.28);
+  --radius-hermetic: 1.5rem;
+}
+
+/* 
+  Hermetic Parchment Theme
+  This is the light theme, but not plain white.
+  It uses warm paper tones and dark ink for strong readability.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 38 42% 91%;
+  --foreground: 28 28% 12%;
+
+  --surface: 38 35% 86%;
+  --surface-elevated: 39 48% 96%;
+  --border-soft: 31 25% 58%;
+
+  --primary: 39 92% 38%;
+  --primary-foreground: 36 40% 8%;
+
+  --shadow: 352 55% 35%;
+  --light: 151 56% 26%;
+  --muted-text: 28 18% 30%;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 
+  Hermetic Noir Theme
+  This is the dark/default theme.
+*/
+.dark {
+  --background: 24 12% 6%;
+  --foreground: 45 35% 92%;
+
+  --surface: 24 12% 10%;
+  --surface-elevated: 24 12% 14%;
+  --border-soft: 28 10% 27%;
+
+  --primary: 42 92% 58%;
+  --primary-foreground: 30 42% 8%;
+
+  --shadow: 356 70% 64%;
+  --light: 151 66% 56%;
+  --muted-text: 35 14% 70%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: hsl(var(--border-soft));
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at top left,
+      hsl(var(--primary) / 0.2),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      hsl(var(--light) / 0.12),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 50% 80%,
+      hsl(var(--shadow) / 0.08),
+      transparent 34rem
+    ),
+    linear-gradient(
+      135deg,
+      hsl(var(--background)),
+      hsl(var(--surface))
+    );
+  color: hsl(var(--foreground));
+}
+::selection {
+  background: hsl(var(--primary) / 0.35);
+  color: hsl(var(--foreground));
+}
+
+.hermetic-card {
+  border: 1px solid hsl(var(--border-soft));
+  background:
+    linear-gradient(
+      135deg,
+      hsl(var(--surface-elevated) / 0.92),
+      hsl(var(--surface) / 0.82)
+    );
+  box-shadow: var(--shadow-hermetic);
+  backdrop-filter: blur(18px);
+}
+
+.hermetic-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border-soft) / 0.72);
+  background:
+    linear-gradient(
+      135deg,
+      hsl(var(--surface-elevated) / 0.78),
+      hsl(var(--surface) / 0.54)
+    );
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 hsl(var(--foreground) / 0.08);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+
+.hermetic-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at top left,
+      hsl(var(--primary) / 0.16),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      hsl(var(--light) / 0.09),
+      transparent 34%
+    );
+  opacity: 0.85;
+}
+
+.hermetic-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark .hermetic-card {
+  border-color: hsl(var(--border-soft) / 0.78);
+  background:
+    linear-gradient(
+      135deg,
+      hsl(var(--surface-elevated) / 0.72),
+      hsl(var(--surface) / 0.46)
+    );
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 hsl(var(--foreground) / 0.06);
+}
+
+.hermetic-input {
+  border: 1px solid hsl(var(--border-soft) / 0.78);
+  background:
+    linear-gradient(
+      135deg,
+      hsl(var(--surface-elevated) / 0.72),
+      hsl(var(--surface) / 0.48)
+    );
+  color: hsl(var(--foreground));
+  box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.06);
+  backdrop-filter: blur(14px) saturate(125%);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+}
+
+.hermetic-input::placeholder {
+  color: hsl(var(--muted-text) / 0.75);
+}
+
+.hermetic-input:focus {
+  border-color: hsl(var(--primary) / 0.85);
+  box-shadow:
+    0 0 0 3px hsl(var(--primary) / 0.16),
+    inset 0 1px 0 hsl(var(--foreground) / 0.08);
+}
+
+.dark .hermetic-input {
+  background: hsl(var(--background) / 0.65);
+}
+
+.hermetic-readable {
+  color: hsl(var(--foreground));
+  text-shadow: 0 1px 1px hsl(var(--background) / 0.25);
+}
+
+.hermetic-muted {
+  color: hsl(var(--muted-text));
+}
+
+.hermetic-label {
+  color: hsl(var(--primary));
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hermetic-panel-text {
+  color: hsl(var(--foreground));
+}
+
+.hermetic-subtext {
+  color: hsl(var(--muted-text));
+}
+
+.dark .hermetic-readable {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.light-text-strong {
+  color: hsl(28 28% 12%);
+}
+
+.dark .light-text-strong {
+  color: hsl(45 35% 92%);
 }
