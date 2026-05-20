@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme.@theme {
@@ -343,3 +342,6 @@ body {
   These override older hardcoded Tailwind colors already inside the dashboard.
   This lets us improve readability without rewriting the huge dashboard file.
 */
+
+
+@import "./hacker-theme.css";
