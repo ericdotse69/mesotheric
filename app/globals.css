@@ -2,7 +2,97 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
+@theme.@theme {
+*/
+
+.text-stone-100,
+.text-stone-200 {
+  color: hsl(var(--foreground)) !important;
+}
+
+.text-stone-300 {
+  color: hsl(var(--foreground) / 0.9) !important;
+}
+
+.text-stone-400 {
+  color: hsl(var(--muted-text)) !important;
+}
+
+.text-stone-500,
+.text-stone-600 {
+  color: hsl(var(--muted-text) / 0.82) !important;
+}
+
+.text-amber-300,
+.text-amber-400,
+.text-amber-500 {
+  color: hsl(var(--primary)) !important;
+}
+
+.text-red-300,
+.text-red-400 {
+  color: hsl(var(--shadow)) !important;
+}
+
+.text-emerald-100,
+.text-emerald-200,
+.text-emerald-300,
+.text-emerald-400 {
+  color: hsl(var(--light)) !important;
+}
+
+.border-stone-700,
+.border-stone-800 {
+  border-color: hsl(var(--border-soft) / 0.86) !important;
+}
+
+.bg-stone-950,
+.bg-stone-950\/70 {
+  background-color: hsl(var(--background) / 0.78) !important;
+}
+
+.bg-stone-900,
+.bg-stone-900\/70 {
+  background-color: hsl(var(--surface) / 0.78) !important;
+}
+
+.bg-amber-400 {
+  background-color: hsl(var(--primary)) !important;
+}
+
+.text-stone-950 {
+  color: hsl(var(--primary-foreground)) !important;
+}
+
+.border-emerald-500\/20,
+.border-emerald-500\/30,
+.border-emerald-500\/40 {
+  border-color: hsl(var(--light) / 0.36) !important;
+}
+
+.bg-emerald-500\/10 {
+  background-color: hsl(var(--light) / 0.14) !important;
+}
+
+.border-red-500\/20,
+.border-red-500\/30,
+.border-red-500\/40 {
+  border-color: hsl(var(--shadow) / 0.36) !important;
+}
+
+.bg-red-500\/10 {
+  background-color: hsl(var(--shadow) / 0.14) !important;
+}
+
+.border-amber-500\/20,
+.border-amber-500\/30,
+.border-amber-500\/40 {
+  border-color: hsl(var(--primary) / 0.36) !important;
+}
+
+.bg-amber-500\/10 {
+  background-color: hsl(var(--primary) / 0.14) !important;
+}
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
 
@@ -23,8 +113,7 @@
 
 /* 
   Hermetic Parchment Theme
-  This is the light theme, but not plain white.
-  It uses warm paper tones and dark ink for strong readability.
+  Light theme, but warm and readable — not plain white.
 */
 :root {
   --background: 38 42% 91%;
@@ -32,19 +121,19 @@
 
   --surface: 38 35% 86%;
   --surface-elevated: 39 48% 96%;
-  --border-soft: 31 25% 58%;
+  --border-soft: 31 25% 54%;
 
-  --primary: 39 92% 38%;
+  --primary: 39 92% 34%;
   --primary-foreground: 36 40% 8%;
 
-  --shadow: 352 55% 35%;
-  --light: 151 56% 26%;
-  --muted-text: 28 18% 30%;
+  --shadow: 352 58% 34%;
+  --light: 151 58% 25%;
+  --muted-text: 28 18% 28%;
 }
 
 /* 
   Hermetic Noir Theme
-  This is the dark/default theme.
+  Dark/default theme.
 */
 .dark {
   --background: 24 12% 6%;
@@ -52,14 +141,14 @@
 
   --surface: 24 12% 10%;
   --surface-elevated: 24 12% 14%;
-  --border-soft: 28 10% 27%;
+  --border-soft: 28 10% 30%;
 
   --primary: 42 92% 58%;
   --primary-foreground: 30 42% 8%;
 
-  --shadow: 356 70% 64%;
-  --light: 151 66% 56%;
-  --muted-text: 35 14% 70%;
+  --shadow: 356 70% 66%;
+  --light: 151 66% 58%;
+  --muted-text: 35 14% 74%;
 }
 
 * {
@@ -75,17 +164,17 @@ body {
   background:
     radial-gradient(
       circle at top left,
-      hsl(var(--primary) / 0.2),
+      hsl(var(--primary) / 0.22),
       transparent 28rem
     ),
     radial-gradient(
       circle at 80% 10%,
-      hsl(var(--light) / 0.12),
+      hsl(var(--light) / 0.14),
       transparent 30rem
     ),
     radial-gradient(
       circle at 50% 80%,
-      hsl(var(--shadow) / 0.08),
+      hsl(var(--shadow) / 0.1),
       transparent 34rem
     ),
     linear-gradient(
@@ -95,32 +184,23 @@ body {
     );
   color: hsl(var(--foreground));
 }
+
 ::selection {
   background: hsl(var(--primary) / 0.35);
   color: hsl(var(--foreground));
 }
 
-.hermetic-card {
-  border: 1px solid hsl(var(--border-soft));
-  background:
-    linear-gradient(
-      135deg,
-      hsl(var(--surface-elevated) / 0.92),
-      hsl(var(--surface) / 0.82)
-    );
-  box-shadow: var(--shadow-hermetic);
-  backdrop-filter: blur(18px);
-}
+/* ---------- Hermetic Glass ---------- */
 
 .hermetic-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid hsl(var(--border-soft) / 0.72);
+  border: 1px solid hsl(var(--border-soft) / 0.78);
   background:
     linear-gradient(
       135deg,
-      hsl(var(--surface-elevated) / 0.78),
-      hsl(var(--surface) / 0.54)
+      hsl(var(--surface-elevated) / 0.84),
+      hsl(var(--surface) / 0.68)
     );
   box-shadow:
     0 24px 80px rgba(0, 0, 0, 0.24),
@@ -154,12 +234,12 @@ body {
 }
 
 .dark .hermetic-card {
-  border-color: hsl(var(--border-soft) / 0.78);
+  border-color: hsl(var(--border-soft) / 0.8);
   background:
     linear-gradient(
       135deg,
-      hsl(var(--surface-elevated) / 0.72),
-      hsl(var(--surface) / 0.46)
+      hsl(var(--surface-elevated) / 0.74),
+      hsl(var(--surface) / 0.5)
     );
   box-shadow:
     0 28px 90px rgba(0, 0, 0, 0.42),
@@ -167,12 +247,12 @@ body {
 }
 
 .hermetic-input {
-  border: 1px solid hsl(var(--border-soft) / 0.78);
+  border: 1px solid hsl(var(--border-soft) / 0.82);
   background:
     linear-gradient(
       135deg,
-      hsl(var(--surface-elevated) / 0.72),
-      hsl(var(--surface) / 0.48)
+      hsl(var(--surface-elevated) / 0.82),
+      hsl(var(--surface) / 0.58)
     );
   color: hsl(var(--foreground));
   box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.06);
@@ -180,53 +260,86 @@ body {
   -webkit-backdrop-filter: blur(14px) saturate(125%);
 }
 
+.dark .hermetic-input {
+  background:
+    linear-gradient(
+      135deg,
+      hsl(var(--surface-elevated) / 0.7),
+      hsl(var(--background) / 0.62)
+    );
+}
+
 .hermetic-input::placeholder {
-  color: hsl(var(--muted-text) / 0.75);
+  color: hsl(var(--muted-text) / 0.76);
 }
 
 .hermetic-input:focus {
-  border-color: hsl(var(--primary) / 0.85);
+  border-color: hsl(var(--primary) / 0.9);
   box-shadow:
     0 0 0 3px hsl(var(--primary) / 0.16),
     inset 0 1px 0 hsl(var(--foreground) / 0.08);
 }
 
-.dark .hermetic-input {
-  background: hsl(var(--background) / 0.65);
-}
+/* ---------- Readability Helpers ---------- */
 
-.hermetic-readable {
+.text-readable {
   color: hsl(var(--foreground));
-  text-shadow: 0 1px 1px hsl(var(--background) / 0.25);
 }
 
-.hermetic-muted {
+.text-readable-soft {
+  color: hsl(var(--foreground) / 0.88);
+}
+
+.text-muted-strong {
   color: hsl(var(--muted-text));
 }
 
-.hermetic-label {
+.text-gold {
+  color: hsl(var(--primary));
+}
+
+.text-shadow-strong {
+  color: hsl(var(--shadow));
+}
+
+.text-light-strong {
+  color: hsl(var(--light));
+}
+
+.glass-readable {
+  background: hsl(var(--surface-elevated) / 0.86);
+  border: 1px solid hsl(var(--border-soft) / 0.88);
+  color: hsl(var(--foreground));
+}
+
+.dark .glass-readable {
+  background: hsl(var(--surface-elevated) / 0.74);
+}
+
+.readable-badge {
+  border: 1px solid hsl(var(--primary) / 0.38);
+  background: hsl(var(--primary) / 0.14);
   color: hsl(var(--primary));
   font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
 }
 
-.hermetic-panel-text {
-  color: hsl(var(--foreground));
+.shadow-badge {
+  border: 1px solid hsl(var(--shadow) / 0.38);
+  background: hsl(var(--shadow) / 0.14);
+  color: hsl(var(--shadow));
+  font-weight: 700;
 }
 
-.hermetic-subtext {
-  color: hsl(var(--muted-text));
+.light-badge {
+  border: 1px solid hsl(var(--light) / 0.38);
+  background: hsl(var(--light) / 0.14);
+  color: hsl(var(--light));
+  font-weight: 700;
 }
 
-.dark .hermetic-readable {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-}
 
-.light-text-strong {
-  color: hsl(28 28% 12%);
-}
-
-.dark .light-text-strong {
-  color: hsl(45 35% 92%);
-}
+/* 
+  Compatibility Bridge:
+  These override older hardcoded Tailwind colors already inside the dashboard.
+  This lets us improve readability without rewriting the huge dashboard file.
+*/
